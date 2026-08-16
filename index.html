@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4f46e5">
+<title>算法实习通关手册</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20260816">
+<link rel="stylesheet" href="css/style.css?v=20260816-7">
+</head>
+<body>
+<div class="layout">
+<aside>
+  <div class="brand">
+    <div class="logo">🚀</div>
+    <div><div class="b-t">算法实习通关手册</div><div class="b-s">算法学习与实习准备</div></div>
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="切换为深色主题" title="切换为深色主题">🌗</button>
+  </div>
+  <nav id="nav"></nav>
+  <div class="side-foot">
+    <div class="mini-prog"><div class="prog-bar"><i id="sideFill" style="width:0%"></i></div><span id="sidePct">0%</span></div>
+    <div class="foot-note">进度自动保存在本机浏览器</div>
+  </div>
+</aside>
+<main>
+  <div class="global-progress-actions" aria-label="进度备份">
+    <button class="btn btn-sm" id="globalExpBtn" title="导出 JSON 进度文件">⬇ 导出 JSON</button>
+    <button class="btn btn-sm" id="globalImpBtn" title="导入 JSON 进度文件">⬆ 导入 JSON</button>
+    <input type="file" id="impFile" accept=".json,application/json" hidden>
+  </div>
+
+  <!-- ====== 总览 ====== -->
+  <section data-view="home">
+    <div class="card hero">
+      <div class="hero-txt">
+        <h1>把这份攻略，刷成你的 Offer</h1>
+        <p>按 Python、Hello 算法、算法探险、数据库探险、自由复习与 AI 进阶依次推进；学过的题目和模板都能回到同一份手册复习。</p>
+        <div class="hero-quote" id="quoteBox">…</div>
+      </div>
+      <div class="hero-ring">
+        <div class="ring-wrap">
+          <svg width="150" height="150" viewBox="0 0 150 150">
+            <circle class="ring-bg" cx="75" cy="75" r="64"></circle>
+            <circle class="ring-fg" id="ringFg" cx="75" cy="75" r="64" stroke-dasharray="402.1" stroke-dashoffset="402.1"></circle>
+          </svg>
+          <div class="ring-txt"><div class="ring-num" id="ringNum">0%</div><div class="ring-lab">总进度</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tiles" id="statTiles"></div>
+    <div class="path-summary"><div><span class="path-kicker">固定学习顺序</span><h3>Python → Hello 算法 → 两类探险 → 自由复习 → AI 进阶</h3><p>阶段按顺序推进。Hot 100 和 SQL 50 放在两类官方探险之后，按薄弱点自由刷。</p></div><button class="btn btn-p" data-go="path">查看学习主线</button></div>
+    <div class="card"><h3>📌 下一步做什么</h3><div id="nextSteps"></div></div>
+    <h3 class="sec-h">功能入口</h3>
+    <div class="quick-grid" id="quickGrid"></div>
+    <div class="src-note">题单同步自 LeetCode，学习路径参考 Python 官方教程与 Hello 算法 · 仅供学习使用</div>
+  </section>
+
+  <!-- ====== 固定学习主线 ====== -->
+  <section data-view="path" hidden>
+    <h2 class="v-title">🧩 学习主线</h2>
+    <p class="v-desc">只有这一条顺序：先把 Python 和算法基础学稳，再进入官网探险题单；完成算法与数据库探险后自由复习，最后只补一次 AI 公共基础，并按岗位目标进入独立方向。</p>
+    <div class="path-flow" id="learningPath"></div>
+  </section>
+
+  <!-- ====== AI 进阶路线 ====== -->
+  <section data-view="roadmap" hidden>
+    <h2 class="v-title">🗺️ AI 进阶路线</h2>
+    <p class="v-desc">这是固定学习主线的第六阶段。前五阶段已经掌握的 Python、算法和 SQL 不再重复；先完成一次公共基础，再按目标选择机器学习、深度学习、推荐、搜索、广告、大模型、RAG / Agent 或 AI 工程。</p>
+    <h3 class="sec-h">选择当前方向</h3>
+    <div id="trackOverview" class="direction-grid"></div>
+    <h3 class="sec-h">方向学习步骤</h3>
+    <div class="tab-btns" id="trackTabs"></div>
+    <div id="trackIntro" class="callout tip"></div>
+    <div id="trackBody"></div>
+    <div class="callout okc"><b>学习规则：</b>公共基础只完成一次；随后选择一条主方向做出项目。需要跨方向时只补依赖，例如推荐精排补深度学习、RAG 补大模型与搜索检索、任何线上项目最后补 AI 工程。</div>
+  </section>
+
+  <!-- ====== 刷题通关 ====== -->
+  <section data-view="leetcode" hidden>
+    <h2 class="v-title">🧭 数据结构与算法探险模式</h2>
+    <p class="v-desc">题单同步自 LeetCode 中文站公开探险数据。官网是分支地图，本站以主线优先、支线随后生成遍历序号，同时保留官网关卡和关内题序；仅收录公开题目，每道正式题均提供完整 Python3 程序。</p>
+    <h3 class="sec-h">官网正式关卡</h3>
+    <div class="quest-summary" id="algoQuestSummary"></div>
+    <div class="quest-toolbar" id="algoQuestToolbar"></div>
+    <div class="quest-list" id="algoQuestList"></div>
+    <div class="quest-quizzes" id="algoQuestQuizzes"></div>
+    <h3 class="sec-h">复习与刷题方法</h3>
+    <div class="grid2">
+      <div class="card"><h3>第一遍 · 理解为主</h3><div style="font-size:13.8px;color:var(--mut)">做法：看完题目<b>直接看答案</b>，避免硬想半天想不出来还挫败信心。<br>目标：理解解题思路和代码逻辑，能<b>清晰口述</b>解题步骤和方法即可。</div></div>
+      <div class="card"><h3>第二遍 · 复现检验</h3><div style="font-size:13.8px;color:var(--mut)">做法：看题后先<b>回忆并默想思路</b>，再对照答案验证；思路对了，就按自己的思路一步步写出代码（可参考答案，慢慢做到完全独立）。</div></div>
+    </div>
+    <div class="callout okc"><b>✅ 第二遍进行中就可以开始投简历。</b>不必追求完全熟练再行动——面试本身也是学习，而且有的面试很看运气，缺人的时候随便问问你就过了。</div>
+    <div class="callout tip"><b>🔁 探险模式复习节奏：</b>新题与旧题滚动并行。先按关卡完成新题，再复习已学模板和错题；<b>防遗忘比单纯堆题量更重要</b>。</div>
+    <div class="card"><h3>🧗 推荐刷题顺序<span class="h-sub">0 基础友好；纯建议，可按自己节奏来</span></h3><div class="stepper" id="stepper"></div></div>
+    <div class="card"><h3>⚠️ 三种模式，别只会一种</h3>
+      <p style="font-size:13.5px;color:var(--mut);margin-bottom:10px">平时刷的「核心代码模式」≠ 面试 ≠ 笔试。很多人只刷核心模式，面试现场连 ListNode 都定义不出来，非常尴尬。三个例子都以「反转链表 / 读入求和」为底，直接对比：</p>
+      <div id="modeTabs"></div>
+    </div>
+    <div class="card"><h3>🧮 复杂度反推速查<span class="h-sub">笔试神器：先看数据范围，再想算法</span></h3>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>数据规模 n</th><th>可接受复杂度</th><th>该想到的算法</th></tr>
+        <tr><td>n ≤ 20</td><td>O(2ⁿ) / O(n!)</td><td>回溯、枚举子集、全排列</td></tr>
+        <tr><td>n ≤ 500</td><td>O(n³)</td><td>区间 DP、Floyd</td></tr>
+        <tr><td>n ≤ 5×10³</td><td>O(n²)</td><td>双重循环 DP、朴素比较</td></tr>
+        <tr><td>n ≤ 10⁵ ~ 10⁶</td><td>O(n log n)</td><td>排序、堆、二分、分治</td></tr>
+        <tr><td>n ≥ 10⁶</td><td>O(n) / O(log n)</td><td>哈希、双指针、前缀和、位运算、单调栈</td></tr>
+      </table></div>
+      <div class="callout tip" style="margin-bottom:0">💡 笔试拿到题先瞄一眼 n 的范围，反推能用的复杂度，再想对应主题的算法——比对着暴力硬优化快得多。超时（TLE）九成是复杂度选错了。</div>
+    </div>
+    <h3 class="sec-h">📚 四件套资源</h3>
+    <div class="res-grid">
+      <div class="res-t"><div class="r-n">🎬 灵茶山艾府（B 站）</div><div class="r-d">视频讲解，思路最清爽。<b>⚠️ 跳过他的动态规划部分</b>，DP 去看代码随想录。<br><a href="https://space.bilibili.com/206214" target="_blank" rel="noopener">B 站空间 →</a></div></div>
+      <div class="res-t"><div class="r-n">📖 代码随想录</div><div class="r-d">成体系的解题指南，<b>动态规划重点看这里</b>（动规五部曲）。<br><a href="https://programmercarl.com/" target="_blank" rel="noopener">programmercarl.com →</a></div></div>
+      <div class="res-t"><div class="r-n">🐰 hello-algo</div><div class="r-d">图解 + 交互动画，零基础打底最舒服，每个结构都有可跑的 Python 代码。<br><a href="https://www.hello-algo.com/" target="_blank" rel="noopener">hello-algo.com →</a></div></div>
+      <div class="res-t"><div class="r-n">🐮 牛客网</div><div class="r-d">ACM 输入输出专项练习 + 大厂笔试历史真题，<b>免费</b>（美团刚考完就有人拿出来卖钱，别花冤枉钱）。路径：首页 →「笔试真题」。<br><a href="https://www.nowcoder.com/" target="_blank" rel="noopener">nowcoder.com →</a></div></div>
+    </div>
+    <h3 class="sec-h">🎯 自由复习 · 13 个知识主题</h3>
+    <p class="v-desc" style="margin-bottom:8px">这部分不是官网探险题单，不计入 109 道公开正式题完成度。完成探险后再按薄弱点、错题或面试需要自由复习。</p>
+    <div id="topicList"></div>
+  </section>
+
+  <!-- ====== 数据库探险 ====== -->
+  <section data-view="database" hidden>
+    <h2 class="v-title">🗄️ 数据库探险模式</h2>
+    <p class="v-desc">严格沿用 LeetCode 官网数据库探险的 5 个区域与 19 道公开正式题。每题并列给出可提交的 MySQL 与 Pandas 解法，3 道公开测验题单独列出且不计正式进度。</p>
+    <div class="quest-summary" id="sqlQuestSummary"></div>
+    <div class="quest-toolbar" id="sqlQuestToolbar"></div>
+    <div class="quest-list" id="sqlQuestList"></div>
+    <div class="quest-quizzes" id="sqlQuestQuizzes"></div>
+  </section>
+
+  <!-- ====== Hot 100 / SQL 50 自由复习 ====== -->
+  <section data-view="practice" hidden>
+    <h2 class="v-title">🎯 Hot 100 与 SQL 50</h2>
+    <p class="v-desc">完成两类探险后进入自由复习。Hot 100 严格采用 <a href="https://leetcode.cn/studyplan/top-100-liked/" target="_blank" rel="noopener">LeetCode 热题 100 ↗</a>，SQL 50 严格采用 <a href="https://leetcode.cn/studyplan/sql-free-50/" target="_blank" rel="noopener">高频 SQL 50 题（基础版）↗</a>；两份进度独立记录，不影响探险模式完成度。</p>
+    <div class="tab-btns practice-tabs">
+      <button class="tab-btn on" data-practice-tab="hot100">Hot 100</button>
+      <button class="tab-btn" data-practice-tab="sql50">SQL 50</button>
+    </div>
+    <p id="practiceSource" class="practice-source"></p>
+    <div id="practiceSummary" class="quest-summary"></div>
+    <div id="practiceToolbar" class="quest-toolbar"></div>
+    <div id="practiceList" class="quest-list"></div>
+  </section>
+
+  <!-- ====== 知识卡片 ====== -->
+  <section data-view="cards" hidden>
+    <h2 class="v-title">🃏 知识卡片</h2>
+    <p class="v-desc">深度学习、推荐、强化学习、Agent、机器学习与大模型知识卡，内容整理自公开资料和面试高频考点。点卡片翻面看答案，反复过到「秒答」为止。</p>
+    <div class="deck-chips" id="deckChips"></div>
+    <div class="prog-line"><div class="prog-bar"><i id="cardFill" style="width:0%"></i></div><span id="cardPct">0/0</span></div>
+    <div class="flip-grid" id="flipGrid"></div>
+  </section>
+
+  <!-- ====== 随堂自测 ====== -->
+  <section data-view="quiz" hidden>
+    <h2 class="v-title">📝 随堂自测</h2>
+    <p class="v-desc">20 道题，覆盖刷题方法、笔试技巧、简历写法、硬核知识点和面经真题。点选项立刻出对错和解析，答完出总分。</p>
+    <div id="quizBox"></div>
+  </section>
+
+  <!-- ====== 求职宝典 ====== -->
+  <section data-view="job" hidden>
+    <h2 class="v-title">💼 求职宝典</h2>
+    <p class="v-desc">整理公开的简历规范、匿名化项目描述范本、Agent 岗公开面经、面试复盘与避坑提醒。</p>
+    <div class="card"><h3>📄 简历 · 基础规范<span class="h-sub">最基础也最重要，现场真有人踩</span></h3><div id="resumeBasics"></div></div>
+    <div class="card"><h3>✨ 简历 · 进阶加分</h3><div id="resumeAdv"></div></div>
+    <div class="card"><h3>❓ HR 问答实录</h3><div id="resumeQA"></div></div>
+    <div class="card"><h3>📝 匿名化项目描述范本<span class="h-sub">只学习写法，不对应任何具体个人履历</span></h3><div id="projTmpl"></div></div>
+    <div class="card"><h3>🛰️ 三大渠道怎么用</h3><div id="jobChannels"></div></div>
+    <div class="card"><h3>💬 Boss 直聘 · 提高回复率三招</h3><div id="bossTips"></div>
+      <div class="mini-h">📎 打招呼模板（改成自己的信息再用）</div>
+      <div class="tmpl-box" id="tmplBox"></div>
+      <button class="btn btn-p btn-sm" data-copykey="boss">📋 复制模板</button>
+    </div>
+    <div class="card"><h3>🧠 心态补给站</h3><div class="quote-list" id="mindset"></div></div>
+    <div class="card"><h3>🧭 算法实习面试全流程<span class="h-sub">通用流程供参考，不同公司会有增减</span></h3><div id="jobFlow"></div></div>
+    <div class="card"><h3>📖 ML 八股高频十问<span class="h-sub">手册补充；答案控制在三句内，配合知识卡片背</span></h3><div id="baguList"></div></div>
+    <div class="card"><h3>📋 公开面经 · Agent 岗一面<span class="h-sub">两场匿名面试，共 27 问，逐条可对练</span></h3><div id="mjList"></div></div>
+    <div class="card"><h3>🎯 面经考点提炼<span class="h-sub">27 问背后反复出现的六类问题</span></h3><div id="mjPoints"></div></div>
+    <div class="card"><h3>🚩 小厂避坑雷达<span class="h-sub">匿名经验汇总；被压价不代表你不行</span></h3><ul class="flag-list" id="mjFlags"></ul></div>
+    <div class="card"><h3>🩺 面试后的复盘<span class="h-sub">把每次面试转成下一轮行动</span></h3><div id="mjReview"></div></div>
+    <div class="card"><h3>🎤 面试前检查单</h3><div id="ivList"></div></div>
+    <div class="card"><h3>🏃 行动清单 · 从 0 到第一批投递</h3><div id="actList"></div></div>
+  </section>
+
+  <!-- ====== 资源库 ====== -->
+  <section data-view="res" hidden>
+    <h2 class="v-title">📚 资源库</h2>
+    <p class="v-desc">全站资源集中在这里，<b>中文优先</b>（绿色「中」标签）。英文资源只保留不可替代的，都配了中文解读入口。链接如失效，按名称搜索即可。</p>
+    <div id="resLib"></div>
+    <div class="callout tip"><b>💡 用法建议：</b>资源不在多而在用——每个阶段只开 1~2 个主资源，配合「学习路线」的当前步骤走；剩下的当字典，用到再查。遇到读不懂的英文内容，整段丢给大模型要中文精讲。</div>
+  </section>
+
+  <!-- ====== 学习打卡 ====== -->
+  <section data-view="checkin" hidden>
+    <h2 class="v-title">⏱️ 学习打卡</h2>
+    <p class="v-desc">用每日学习时长监督执行即可，不必追求夸张数字；把时间记下来，坚持就看得见。</p>
+    <div class="grid2">
+      <div class="card">
+        <h3>⏳ 专注计时</h3>
+        <div class="timer-big" id="timerBig">00:00:00</div>
+        <div class="timer-sub" id="timerSub">点「开始专注」进入学习状态</div>
+        <div class="timer-btns">
+          <button class="btn btn-p" id="timerToggle">▶ 开始专注</button>
+          <button class="btn" id="timerStop">■ 结束并记录</button>
+        </div>
+        <div class="timer-stats">
+          <div><div class="ts-n" id="stToday">0m</div><div class="ts-l">今日</div></div>
+          <div><div class="ts-n" id="stWeek">0m</div><div class="ts-l">近 7 天</div></div>
+          <div><div class="ts-n" id="stStreak">0 天</div><div class="ts-l">连续打卡</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cal-head"><span id="calTitle">—</span><span class="streak" id="calStreak"></span></div>
+        <div class="cal" id="calGrid"></div>
+        <div class="cal-legend">少&nbsp;<i style="background:var(--l0)"></i><i style="background:var(--l1)"></i><i style="background:var(--l2)"></i><i style="background:var(--l3)"></i><i style="background:var(--l4)"></i>&nbsp;多</div>
+        <div style="text-align:center;margin-top:12px"><button class="btn btn-sm" id="manualCheck">📍 今天在别处学了，手动打卡</button></div>
+      </div>
+    </div>
+    <div class="card"><h3>💾 JSON 数据备份<span class="h-sub">进度存在本机浏览器；换电脑或清缓存前先导出</span></h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-sm" id="expBtn">⬇ 导出 JSON</button>
+        <button class="btn btn-sm" id="impBtn">⬆ 导入 JSON</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+<div id="toast"></div>
+
+<script src="js/data.js"></script>
+<script src="js/data-cards.js"></script>
+<script src="js/data-topics.js"></script>
+<script src="js/data-learning-path.js"></script>
+<script src="js/data-quests-official.js"></script>
+<script src="js/data-algo-solutions-a.js"></script>
+<script src="js/data-algo-solutions-b.js"></script>
+<script src="js/data-sql-solutions.js"></script>
+<script src="js/data-hot100.js"></script>
+<script src="js/data-sql50.js"></script>
+<script src="js/view-home.js"></script>
+<script src="js/view-adventure.js"></script>
+<script src="js/view-database.js"></script>
+<script src="js/view-practice.js"></script>
+<script src="js/app.js?v=20260816-7"></script>
+</body>
+</html>
+
