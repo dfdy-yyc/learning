@@ -52,6 +52,14 @@ AI 进阶不会重复前五阶段的 Python、算法与 SQL。公共基础只学
 
 改完保存、刷新浏览器即可，不需要任何构建工具。
 
+## 部署到 GitHub Pages
+
+仓库已包含 `.github/workflows/pages.yml`。推送到 `main` 或 `master` 后，GitHub Actions 会自动组装纯静态发布包并部署到 Pages。
+
+当前仓库已经启用 GitHub Actions Pages。之后每次推送都会自动更新网站，也可以在 Actions 页面手动运行 `Deploy static site to GitHub Pages`。如果将项目 fork 到新仓库，需要在 **Settings → Pages** 中把 **Build and deployment → Source** 设置为 **GitHub Actions**。
+
+发布包只包含 `index.html`、`favicon.svg`、`.nojekyll`、`css/` 和 `js/`，不会把同步脚本或说明文档暴露为网站内容。所有资源均使用相对路径，因此同时支持用户主页仓库和项目子路径。
+
 ## 进度数据
 
 - 所有勾选、翻卡、计时进度存在**本机浏览器 localStorage**（键名 `algo_hub_v1`），换浏览器/电脑不互通。
